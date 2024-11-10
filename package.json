@@ -2,6 +2,7 @@
   "name": "nodejs",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "note": "./index.js"
   },
@@ -10,5 +11,8 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
 }
