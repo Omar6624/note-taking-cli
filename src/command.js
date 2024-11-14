@@ -65,7 +65,9 @@ yargs(hideBin(process.argv))
     "clear",
     "clear all notes",
     () => {},
-    async (argv) => {}
+    async (argv) => {
+      console.log("argv");
+    }
   )
 
   .demandCommand(1)
