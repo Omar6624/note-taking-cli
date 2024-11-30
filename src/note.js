@@ -1,4 +1,9 @@
 import { insertDb, getDb, saveDb } from "./db.js";
+import Fuse from "fuse.js";
+const options = {
+  includeScore: false,
+  keys: ["contents", "tags"],
+};
 
 export const newNotes = async (note, tags = []) => {
   const noteObj = {
@@ -16,11 +21,16 @@ export const allNotes = async () => {
 
 export const findNote = async (filter) => {
   const { notes } = await getDb();
-  if (notes.length !== 0) {
-    return notes.filter((note) =>
-      note.contents.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
+  const fuse = new Fuse(notes, options);
+  const result = fuse.search(filter.toLowerCase());
+  const items = result.map(({ item }) => item);
+  console.log(items);
+  return items;
+  // if (notes.length !== 0) {
+  //   return notes.filter((note) =>
+  //     note.contents.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  // }
 };
 
 export const removeNotes = async (id) => {

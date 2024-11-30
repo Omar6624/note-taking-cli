@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "fuse.js": "^7.0.0",
     "yargs": "^17.7.2"
   }
 }

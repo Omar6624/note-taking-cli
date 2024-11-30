@@ -51,7 +51,7 @@ yargs(hideBin(process.argv))
     },
     async (argv) => {
       const matches = await findNote(argv.filter);
-      if (matches.length !== 0) {
+      if (matches) {
         listNotes(matches);
       } else {
         console.log("no matches or db empty");
