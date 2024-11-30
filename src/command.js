@@ -49,7 +49,14 @@ yargs(hideBin(process.argv))
         type: "string",
       });
     },
-    async (argv) => {}
+    async (argv) => {
+      const matches = await findNote(argv.filter);
+      if (matches.length !== 0) {
+        listNotes(matches);
+      } else {
+        console.log("no matches or db empty");
+      }
+    }
   )
   .command(
     "remove <id>",
@@ -60,7 +67,15 @@ yargs(hideBin(process.argv))
         type: "number",
       });
     },
-    async (argv) => {}
+    async (argv) => {
+      const id = await removeNotes(argv.id);
+      if (id === -1) {
+        console.log("no note with this id");
+      } else {
+        console.log("removed sucessfully");
+        return id;
+      }
+    }
   )
   .command(
     "web [port]",
@@ -79,7 +94,7 @@ yargs(hideBin(process.argv))
     "clear all notes",
     () => {},
     async (argv) => {
-      console.log("argv");
+      await removeAllNotes();
     }
   )
 
