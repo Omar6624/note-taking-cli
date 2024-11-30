@@ -1,5 +1,13 @@
-import yargs, { argv } from "yargs";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import {
+  removeNotes,
+  removeAllNotes,
+  newNotes,
+  findNote,
+  allNotes,
+} from "./note.js";
+import { listNotes } from "./utils.js";
 
 yargs(hideBin(process.argv))
   .command(
@@ -12,7 +20,9 @@ yargs(hideBin(process.argv))
       });
     },
     async (argv) => {
-      console.info(argv);
+      const tags = argv.tags ? argv.tags.split(",") : [];
+      const noteObj = await newNotes(argv.note, tags);
+      console.log("note added", noteObj);
     }
   )
   .option("tags", {
@@ -24,7 +34,10 @@ yargs(hideBin(process.argv))
     "all",
     "get all notes",
     () => {},
-    async (argv) => {}
+    async (argv) => {
+      const notes = await allNotes();
+      listNotes(notes);
+    }
   )
   .command(
     "find <filter>",
