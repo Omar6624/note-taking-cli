@@ -8,6 +8,7 @@ import {
   allNotes,
 } from "./note.js";
 import { listNotes } from "./utils.js";
+import { start } from "./server.js";
 
 yargs(hideBin(process.argv))
   .command(
@@ -87,7 +88,10 @@ yargs(hideBin(process.argv))
         type: "number",
       });
     },
-    async (argv) => {}
+    async (argv) => {
+      const notes = await allNotes();
+      start(notes, argv.port);
+    }
   )
   .command(
     "clear",
@@ -95,6 +99,7 @@ yargs(hideBin(process.argv))
     () => {},
     async (argv) => {
       await removeAllNotes();
+      console.log("db reseted");
     }
   )
 
